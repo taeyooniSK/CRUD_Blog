@@ -35,7 +35,7 @@ const Blog = mongoose.model("Blog", blogSchema);
 // );
 
 app.get("/", (req, res) => {
-    res.redirect("blogs");
+    res.redirect("/blogs");
 })
 
 app.get("/blogs", (req, res) => {
@@ -98,6 +98,17 @@ app.put("/blogs/:id", (req, res) => {
         if(err) console.log(err);
         console.log(blog)
         res.redirect(`/blogs/${req.params.id}`);
+    });
+});
+
+// Delete route
+
+app.delete("/blogs/:id", (req, res) => {
+    Blog.findByIdAndRemove(req.params.id, (err, blog) => {
+        if(err) res.redirect("back");
+        
+        console.log(blog);
+        res.redirect("/blogs");
     });
 });
 
