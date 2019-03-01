@@ -1,0 +1,12 @@
+<% include partials/header %>
+
+<div class="container border border-primary mt-5">
+    <div class="d-flex" style="flex-direction: column; justify-content: center; align-items: center;">   
+        <h3 class="mt-3"><%= blog.title %></h3>
+        <img src="<%= blog.image %>" alt="<%= blog.title %>" style="height: 400px;">
+        <p><%= blog.created.toDateString() %></p>
+        <p><%= blog.description %></p>
+    </div>
+</div>
+
+<% include partials/footer %>

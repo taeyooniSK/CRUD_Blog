@@ -8,8 +8,9 @@ const bodyParser = require("body-parser"),
 mongoose.connect("mongodb://localhost/crude_blog", {useNewUrlParser: true});
 
 app.set("view engine", "ejs");
-
 app.use(express.static("public"));
+// app.use(express.static(__dirname + "/public/"));
+// console.log(__dirname);
 app.use(bodyParser.urlencoded({extended : true}));
 
 const blogSchema = new mongoose.Schema({
@@ -22,33 +23,62 @@ const blogSchema = new mongoose.Schema({
 
 const Blog = mongoose.model("Blog", blogSchema);
 
-const newBlog = new Blog(
-    {
-        title: "Hello",
-        image: "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BBSw2ne.img?h=270&w=270&m=6&q=60&o=f&l=f",
-        description: "my dog is so lovely !!!!!!",
-        author: "Handeson"
-    }
-);
+// const newBlog = new Blog(
+//     {
+//         title: "Hello2",
+//         image: "https://image.ytn.co.kr/general/jpg/2017/1018/201710181100063682_d.jpg",
+//         description: "my dog is picked up as the cutest dog in the world!",
+//         author: "Hanna"
+//     }
+// );
 
 app.get("/", (req, res) => {
     res.redirect("blogs");
 })
 
 app.get("/blogs", (req, res) => {
-    newBlog.save( (err, data) => {
-        if(err) console.log(err);
-        Blog.find({}, (err, data) => {
-            if (err)  console.log(err);
-            console.log(data);
-        })
-    })
+    Blog.find({}, (err, blogs) => {
+        if (err) console.log(err);
+        res.render("index", { blogs });
+    });
+    // newBlog.save( (err, data) => {
+    //     if(err) console.log(err);
+    //     Blog.find({}, (err, data) => {
+    //         if (err)  console.log(err);
+    //         console.log(data);
+    //     })
+    // });
     // Blog.create(newBlog, (err, data) =>{
     //     if (err) console.log(err);
     //     console.log(data);
+       
     // })
-    res.render("index", { blogs });
+    
 });
+
+
+app.post("/blogs", (req, res) => {
+    Blog.create(req.body.blog, (err, newBlog) => {
+        if(err) console.log(err);
+        console.log(newBlog);
+        res.redirect("/blogs");
+    });
+});
+
+app.get("/blogs/new", (req, res) => {
+    res.render("new");
+});
+
+
+app.get("/blogs/:id", (req, res) => {
+    Blog.findById(req.params.id, (err, blog) => {
+        if(err) console.log(blog);
+
+        res.render("show", {blog});
+    });
+});
+
+
 
 app.listen(3000, () => {
     console.log("Server has started !");

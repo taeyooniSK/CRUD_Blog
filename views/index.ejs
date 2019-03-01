@@ -5,11 +5,11 @@
                 <img class="card-img-left small-img" src="<%= blog.image %>" alt="<%= blog.title %>">
                 <div class="card-body">
                     <h4 class="card-title"><%= blog.title %></h4>
+                    <p class="card-text"><%= blog.created.toDateString() %></p>
                     <p class="card-text"><%= blog.description %></p>
-                    <a href="#" class="btn btn-primary">Read More</a>
+                    <a href="/blogs/<%= blog._id %>" class="btn btn-primary">Read More</a>
                 </div>
             </div>
         <% }) %>
     </div>
-
 <% include partials/footer %>
