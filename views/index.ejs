@@ -1,7 +1,7 @@
 <% include partials/header %>
     <div class="container container-small">
         <% blogs.forEach( blog => { %>
-            <div class="card mt-5 flex-right limited-height">
+            <div class="card mt-4 mb-4 flex-right limited-height">
                 <img class="card-img-left small-img" src="<%= blog.image %>" alt="<%= blog.title %>">
                 <div class="card-body">
                     <h4 class="card-title"><%= blog.title %></h4>

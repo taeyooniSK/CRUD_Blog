@@ -91,6 +91,16 @@ app.get("/blogs/:id/edit", (req, res) => {
 });
 
 
+// Update route
+
+app.put("/blogs/:id", (req, res) => {
+    Blog.findByIdAndUpdate(req.params.id, req.body.blog, (err, blog) => {
+        if(err) console.log(err);
+        console.log(blog)
+        res.redirect(`/blogs/${req.params.id}`);
+    });
+});
+
 app.listen(3000, () => {
     console.log("Server has started !");
 });
