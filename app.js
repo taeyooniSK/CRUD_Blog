@@ -1,4 +1,5 @@
 const bodyParser = require("body-parser"),
+      methodOverride = require("method-override"),
       mongoose = require("mongoose"),
       express = require("express"),
       app = express(),
@@ -12,6 +13,7 @@ app.use(express.static("public"));
 // app.use(express.static(__dirname + "/public/"));
 // console.log(__dirname);
 app.use(bodyParser.urlencoded({extended : true}));
+app.use(methodOverride("_method"));
 
 const blogSchema = new mongoose.Schema({
     title: String,
@@ -78,6 +80,15 @@ app.get("/blogs/:id", (req, res) => {
     });
 });
 
+// Edit route
+
+app.get("/blogs/:id/edit", (req, res) => {
+    Blog.findById(req.params.id, (err, blog) => {
+        if(err) console.log(err);
+        console.log(blog);
+        res.render("edit", {blog});
+    });
+});
 
 
 app.listen(3000, () => {

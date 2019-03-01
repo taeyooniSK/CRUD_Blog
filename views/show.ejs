@@ -7,6 +7,9 @@
         <p><%= blog.created.toDateString() %></p>
         <p><%= blog.description %></p>
     </div>
+    <form action="/blogs/<%= blog._id %>/edit" method="GET">
+        <button class="btn btn-primary mb-5">Edit</button>
+    </form>
 </div>
 
 <% include partials/footer %>
